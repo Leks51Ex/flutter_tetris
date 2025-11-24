@@ -1,3 +1,5 @@
+// board.dart
+
 import 'blocks/blocks.dart';
 
 class Board {
@@ -84,6 +86,7 @@ class Board {
 
   // Метод отрисовки основной доски
   void drawBoard() {}
+
   // Метод генерации нового блока и добавления его на основную доску
   void newBlock() {
     currentBlock = newBlockFunc();

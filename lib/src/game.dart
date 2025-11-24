@@ -33,7 +33,9 @@ final class Game {
   }
 
   // Метод обновления счета
-  void updateScore() {}
+  void updateScore() {
+    score += 10;
+  }
 
   // Метод генерации новой фигуры
   Block newBlock() {
