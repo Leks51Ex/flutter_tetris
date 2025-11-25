@@ -8,12 +8,14 @@ import 'board.dart';
 
 final class Game {
   late Board board;
-  late Block currentBlock; // текущий блок
-  late Block nextBlock; // следующий блок
+  late Block currentBlock;
+  late Block nextBlock;
   bool _isGameOver = false;
   int score = 0;
+  int level = 0;
+  bool _isPaused = false;
 
-  Game({required this.onGameOver}) {
+  Game({required this.onGameOver, required this.onPause}) {
     currentBlock = getNewRandomBlock();
     nextBlock = getNewRandomBlock();
 
@@ -32,6 +34,11 @@ final class Game {
     currentBlock = block;
   }
 
+  void toglePause() {
+    _isPaused = !_isPaused;
+    onPause(_isPaused);
+  }
+
   // Метод обновления счета
   void updateScore() {
     score += 10;
@@ -45,6 +52,7 @@ final class Game {
   }
 
   final Function(String scores) onGameOver;
+  final Function(bool isPaused) onPause;
 
   // Метод для установки прослушивания нажатий клавиш
   // и передачи ASCII-кода нажатой клавиши на уровень ниже
@@ -54,9 +62,16 @@ final class Game {
   Future<void> start({required VoidCallback onUpdate}) async {
     // Запускаем игровой цикл
     while (!_isGameOver) {
-      nextStep();
-      await Future.delayed(const Duration(milliseconds: 500));
-      onUpdate(); // Вызывается на каждый цикл игры
+      if (!_isPaused) {
+        nextStep();
+        onUpdate();
+      }
+      level = score ~/ 30 + 1;
+      int delayMs = 500 - (level - 1) * 50;
+      if (delayMs < 100) delayMs = 100;
+
+      await Future.delayed(Duration(milliseconds: delayMs));
+      // Вызывается на каждый цикл игры
     }
     onGameOver(score.toString()); // Вызывается при завершении игры
   }
@@ -89,8 +104,6 @@ final class Game {
 
   // Добавляем в класс Game (в любое место, например перед nextStep)
   void drawNextBlock() {}
-
-  void togglePause() {}
 
   Future<bool> showGameOverMenu() async {
     return Future.value(true);
