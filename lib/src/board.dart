@@ -58,6 +58,8 @@ class Board {
           moveBlock(x + 1, y);
         }
     }
+
+    updateBlock(currentBlock);
   }
 
   // сохранение текущего состояния игрового поля
