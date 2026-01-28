@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tetris/tetris_game.dart';
 
+
+import 'package:flutter_tetris/screens/game_over_screen.dart';
+import 'package:flutter_tetris/screens/game_screen.dart';
+import 'package:flutter_tetris/screens/main_menu_screen.dart';
+
+
+
+part 'game_router.dart';
 void main(List<String> args) {
   runApp(MyApp());
 }
@@ -12,7 +20,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(body: TetrisGame()),
+      initialRoute: GameRouter.initialRoute,
+      routes: GameRouter._appRoutes,
     );
   }
 }

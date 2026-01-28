@@ -223,7 +223,8 @@ final class Game extends ChangeNotifier {
   void gameOver() {
     _isGameOver = true;
     // Уведомляем слушателей об окончании игры
-    notifyListeners();
+       onGameOver(score.toString());
+
   }
 
   // Метод обработки шага игрового цикла

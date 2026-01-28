@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_tetris/main.dart';
 import 'package:flutter_tetris/src/blocks/blocks.dart';
 import 'package:flutter_tetris/src/board.dart';
 import 'package:flutter_tetris/src/game.dart';
@@ -100,7 +101,9 @@ class _TetrisGameState extends State<TetrisGame> {
   @override
   void initState() {
     super.initState();
-    game = Game(onGameOver: (scores) {}, onPaused: (bool isPaused) {});
+    game = Game(onGameOver: (scores) {
+      Navigator.pushReplacementNamed(context, GameRouter.gameOverRoute, arguments: scores);
+    }, onPaused: (bool isPaused) {});
     game.start();
   }
 
@@ -112,17 +115,17 @@ class _TetrisGameState extends State<TetrisGame> {
       listenable: game,
       // Перестраиваем виджет при изменении состояния игры
       builder: (context, _) {
-        if (game.isGameOver) {
-          return Center(
-            child: GameScores(
-              level: game.level,
-              score: game.score,
-              onRestart: () {
-                game.restart();
-              },
-            ),
-          );
-        }
+        // if (game.isGameOver) {
+        //   return Center(
+        //     child: GameScores(
+        //       level: game.level,
+        //       score: game.score,
+        //       onRestart: () {
+        //         game.restart();
+        //       },
+        //     ),
+        //   );
+        // }
 
         return Focus(
           autofocus: true,
