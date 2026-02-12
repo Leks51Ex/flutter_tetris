@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tetris/app/di_container.dart';
 import 'package:flutter_tetris/tetris_game.dart';
 
 
@@ -18,10 +19,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: GameRouter.initialRoute,
-      routes: GameRouter._appRoutes,
+    return DiContainer(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: GameRouter.initialRoute,
+        routes: GameRouter._appRoutes,
+      ),
     );
   }
 }
