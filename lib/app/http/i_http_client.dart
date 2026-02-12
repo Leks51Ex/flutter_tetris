@@ -10,4 +10,6 @@ abstract interface class IHttpClient {
   Future<Response> get(String url);
 
   Future<Response> put(String url, {Object? body});
+
+  
 }

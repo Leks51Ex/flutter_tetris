@@ -30,7 +30,7 @@ class LeaderBoardCubit {
         stackTrace: stackTrace,));
     }
   }
-
+    
    void dispose() {
     stateNotifier.dispose();
   }

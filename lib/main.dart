@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tetris/app/di_container.dart';
+import 'package:flutter_tetris/features/leaderboard/presentation/leader_board_screen.dart';
 import 'package:flutter_tetris/tetris_game.dart';
 
 
 import 'package:flutter_tetris/screens/game_over_screen.dart';
 import 'package:flutter_tetris/screens/game_screen.dart';
-import 'package:flutter_tetris/screens/main_menu_screen.dart';
+import 'package:flutter_tetris/features/main_menu/main_menu_screen.dart';
 
 
 
-part 'game_router.dart';
+part 'app/game_router.dart';
 void main(List<String> args) {
   runApp(MyApp());
 }
