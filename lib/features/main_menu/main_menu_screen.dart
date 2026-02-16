@@ -12,18 +12,19 @@ class MainMenuScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ElevatedButton(onPressed:() {
-                 Navigator.pushReplacementNamed(
-                    context, 
-                    GameRouter.gameRoute,
-                 );
-            }, child: Text(
-              'Начать игру'
-            )),
-            SizedBox(height: 16,),
-            ElevatedButton(onPressed: (){
-              Navigator.pushNamed(context, GameRouter.leaderboardRoute);
-            }, child: Text('Лучшие результаты'))
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, GameRouter.userRouter);
+              },
+              child: Text('Начать игру'),
+            ),
+            SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, GameRouter.leaderboardRoute);
+              },
+              child: Text('Лучшие результаты'),
+            ),
           ],
         ),
       ),

@@ -2,12 +2,14 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_tetris/app/context_ext.dart';
+import 'package:flutter_tetris/app/utils.dart';
 import 'package:flutter_tetris/main.dart';
-import 'package:flutter_tetris/src/blocks/blocks.dart';
-import 'package:flutter_tetris/src/board.dart';
-import 'package:flutter_tetris/src/game.dart';
-import 'package:flutter_tetris/src/game_scores.dart';
-import 'package:flutter_tetris/src/paused_menu.dart';
+import 'package:flutter_tetris/features/game/src/blocks/blocks.dart';
+import 'package:flutter_tetris/features/game/src/board.dart';
+import 'package:flutter_tetris/features/game/src/game.dart';
+import 'package:flutter_tetris/features/game/game_scores.dart';
+import 'package:flutter_tetris/features/game/src/paused_menu.dart';
 
 class _GamePainter extends CustomPainter {
   final List<List<int>> board;
@@ -101,9 +103,16 @@ class _TetrisGameState extends State<TetrisGame> {
   @override
   void initState() {
     super.initState();
-    game = Game(onGameOver: (scores) {
-      Navigator.pushReplacementNamed(context, GameRouter.gameOverRoute, arguments: scores);
-    }, onPaused: (bool isPaused) {});
+    game = Game(
+      onGameOver: (scores) {
+        Navigator.pushReplacementNamed(context, GameRouter.gameOverRoute);
+        context.di.userCubit.setScores(
+          Utils.getUsername(context),
+          int.tryParse(scores.toString()) ?? 0,
+        );
+      },
+      onPaused: (bool isPaused) {},
+    );
     game.start();
   }
 
@@ -188,6 +197,14 @@ class _TetrisGameState extends State<TetrisGame> {
                                 SizedBox(height: 20),
                                 Text(
                                   'Level: ${game.level}',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                SizedBox(height: 20),
+                                Text(
+                                  'Player: ${Utils.getUsername(context)}',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,

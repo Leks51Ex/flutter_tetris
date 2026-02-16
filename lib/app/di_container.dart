@@ -4,31 +4,36 @@ import 'package:flutter_tetris/app/http/base_http_client.dart';
 import 'package:flutter_tetris/app/http/i_http_client.dart';
 import 'package:flutter_tetris/features/leaderboard/data/leaderboard_repository.dart';
 import 'package:flutter_tetris/features/leaderboard/domain/i_leaderboard_repository.dart';
+import 'package:flutter_tetris/features/user/data/user_repository.dart';
+import 'package:flutter_tetris/features/user/domain/i_user_repository.dart';
+import 'package:flutter_tetris/features/user/domain/state/user_cubit.dart';
 
 final class DiContainer extends InheritedWidget {
-  DiContainer({super.key, required super.child}){
+  DiContainer({super.key, required super.child}) {
     // Инициализируем контейнер зависимостей
     _httpClient = BaseHttpClient();
-       leaderRepository = LeaderboardRepository(httpClient: _httpClient);
+    leaderRepository = LeaderboardRepository(httpClient: _httpClient);
+    userRepository = UserRepository(httpClient: _httpClient);
+    userCubit = UserCubit(repository: userRepository);
   }
 
   late final IHttpClient _httpClient;
-    late final ILeaderboardRepository leaderRepository;
+  late final ILeaderboardRepository leaderRepository;
+  late final IUserRepository userRepository;
+  late final UserCubit userCubit;
 
-
-  /// Так как контейнер зависимостей нужен только для доступа 
-  /// к зависимостям – возвращаем false, чтобы виджеты-потомки 
-  /// не перестраивались при изменении контекста 
+  /// Так как контейнер зависимостей нужен только для доступа
+  /// к зависимостям – возвращаем false, чтобы виджеты-потомки
+  /// не перестраивались при изменении контекста
   @override
   bool updateShouldNotify(covariant InheritedWidget oldWidget) => false;
-
 
   /// Получение контейнера зависимостей из контекста
   static DiContainer of(BuildContext context) {
     // Ищем контейнер зависимостей в контексте
     // Если не нашли, то выбрасываем исключение
-    final DiContainer? container =
-        context.getInheritedWidgetOfExactType<DiContainer>();
+    final DiContainer? container = context
+        .getInheritedWidgetOfExactType<DiContainer>();
     if (container == null) {
       throw Exception('Контейнер зависимостей не найден в контексте');
     }
