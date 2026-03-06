@@ -50,14 +50,31 @@ class UserCubit {
   }
 
   void signOut() {
+    repository.deleteUserFromStorage();
     emit(UserInitState());
   }
 
   void reset() {
+    repository.deleteUserFromStorage();
+
     emit(UserInitState());
   }
 
   void emit(UserState cubitState) {
     stateNotifier.value = cubitState;
+  }
+
+  Future<void> restoreUser() async {
+    try {
+      // Получение пользователя из локального хранилища
+      final entity = await repository.getUserFromStorage();
+      if (entity != null) {
+        // Установка состояния успешной загрузки
+        // и передача сущности пользователя
+        emit(UserSuccessState(entity));
+      }
+    } on Object catch (_) {
+      emit(UserInitState());
+    }
   }
 }

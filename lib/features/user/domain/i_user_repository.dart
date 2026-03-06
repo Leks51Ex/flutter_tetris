@@ -4,4 +4,8 @@ abstract interface class IUserRepository {
   Future<UserEntity> createUser(String username);
 
   Future<UserEntity> setScores(String username, int scores);
+
+  Future<UserEntity?> getUserFromStorage();
+
+  Future<void> deleteUserFromStorage();
 }

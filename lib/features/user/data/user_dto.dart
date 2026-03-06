@@ -21,6 +21,10 @@ final class UserDto {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {'id': id, 'username': username, 'score': score};
+  }
+
   UserEntity toEntity() {
     return UserEntity(id: id, username: username, score: score);
   }
